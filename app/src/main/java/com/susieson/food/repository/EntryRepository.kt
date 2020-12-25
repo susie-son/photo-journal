@@ -10,4 +10,8 @@ class EntryRepository @Inject constructor(firestore: FirebaseFirestore) {
         firestore.collection("users").document(it.uid).collection("entries")
     }
     val entries = collectionReference?.let { FirestoreCollectionLiveData(it, Entry::class.java) }
+
+    fun addEntry(entry: Entry) {
+        collectionReference?.add(entry)
+    }
 }
