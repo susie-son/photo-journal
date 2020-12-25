@@ -5,4 +5,5 @@
     <string name="add_entry">Add Entry</string>
     <string name="name">Name</string>
     <string name="name_input_error">Name is required</string>
+    <string name="take_picture">Take Picture</string>
 </resources>

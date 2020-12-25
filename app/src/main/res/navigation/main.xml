@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_pictureFragment"
+            app:destination="@id/pictureFragment" />
     </fragment>
 
     <fragment
@@ -19,5 +22,11 @@
         android:name="com.susieson.food.ui.main.add.AddFragment"
         android:label="@string/add_entry"
         tools:layout="@layout/fragment_add" />
+
+    <fragment
+        android:id="@+id/pictureFragment"
+        android:name="com.susieson.food.ui.main.picture.PictureFragment"
+        android:label="@string/take_picture"
+        tools:layout="@layout/fragment_picture" />
 
 </navigation>

@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
             entryAdapter.submitList(it)
         }
         binding.floatingActionButton.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddFragment())
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPictureFragment())
         }
         return binding.root
     }
