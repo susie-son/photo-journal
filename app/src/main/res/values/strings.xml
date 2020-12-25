@@ -6,4 +6,5 @@
     <string name="name">Name</string>
     <string name="name_input_error">Name is required</string>
     <string name="take_picture">Take Picture</string>
+    <string name="camera_permission_rationale">Access to camera is needed to take photos.</string>
 </resources>

@@ -55,6 +55,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+    implementation 'pub.devrel:easypermissions:3.0.0'
     kapt 'com.google.dagger:hilt-android-compiler:2.28-alpha'
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
     testImplementation 'junit:junit:4.13.1'

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.susieson.food">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".FoodJournalApplication"
         android:allowBackup="true"
