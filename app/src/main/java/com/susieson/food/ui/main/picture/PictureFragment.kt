@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -21,6 +20,7 @@ import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 import java.util.concurrent.Executor
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
@@ -91,9 +91,32 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
 
     private fun bindUseCases(cameraProvider: ProcessCameraProvider) {
         val preview = buildPreview()
+        val imageCapture = buildImageCapture()
         val cameraSelector = buildCameraSelector()
-        cameraProvider.bindToLifecycle(this, cameraSelector, preview)
+        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+        binding.cameraCapture.setOnClickListener {
+            lifecycle.coroutineScope.launchWhenResumed {
+                val imageProxy = imageCapture.takePicture(requireContext().executor)
+                Timber.d("image captured: $imageProxy")
+                imageProxy.close()
+            }
+        }
     }
+
+    private fun buildPreview(): Preview = Preview.Builder()
+        .build()
+        .apply {
+            setSurfaceProvider(binding.cameraPreview.surfaceProvider)
+        }
+
+    private fun buildImageCapture(): ImageCapture = ImageCapture.Builder()
+        .setTargetRotation(binding.cameraPreview.display.rotation)
+        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+        .build()
+
+    private fun buildCameraSelector(): CameraSelector = CameraSelector.Builder()
+        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+        .build()
 
     private suspend fun Context.getCameraProvider(): ProcessCameraProvider =
         suspendCoroutine { continuation ->
@@ -104,13 +127,18 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
             }
         }
 
-    private fun buildPreview(): Preview = Preview.Builder()
-        .build()
-        .apply {
-            setSurfaceProvider(binding.cameraPreview.surfaceProvider)
+    private suspend fun ImageCapture.takePicture(executor: Executor): ImageProxy {
+        return suspendCoroutine { continuation ->
+            takePicture(executor, object : ImageCapture.OnImageCapturedCallback() {
+                override fun onCaptureSuccess(image: ImageProxy) {
+                    continuation.resume(image)
+                    super.onCaptureSuccess(image)
+                }
+                override fun onError(exception: ImageCaptureException) {
+                    continuation.resumeWithException(exception)
+                    super.onError(exception)
+                }
+            })
         }
-
-    private fun buildCameraSelector(): CameraSelector = CameraSelector.Builder()
-        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-        .build()
+    }
 }
