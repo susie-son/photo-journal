@@ -1,6 +1,8 @@
 package com.susieson.food.di
 
+import com.google.firebase.firestore.FirebaseFirestore
 import com.susieson.food.repository.AuthenticationRepository
+import com.susieson.food.repository.EntryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +16,9 @@ object FoodProjectApplicationModule {
     @Singleton
     @Provides
     fun provideAuthenticationRepository() = AuthenticationRepository()
+
+    @Singleton
+    @Provides
+    fun provideEntryRepository() = EntryRepository(FirebaseFirestore.getInstance())
 
 }
