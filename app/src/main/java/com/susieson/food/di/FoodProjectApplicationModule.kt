@@ -1,8 +1,11 @@
 package com.susieson.food.di
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.susieson.food.repository.AuthenticationRepository
 import com.susieson.food.repository.EntryRepository
+import com.susieson.food.repository.ImageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +23,9 @@ object FoodProjectApplicationModule {
     @Singleton
     @Provides
     fun provideEntryRepository() = EntryRepository(FirebaseFirestore.getInstance())
+
+    @Singleton
+    @Provides
+    fun provideImageRepository() = ImageRepository(Firebase.storage)
 
 }

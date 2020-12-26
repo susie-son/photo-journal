@@ -11,11 +11,14 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.susieson.food.R
 import com.susieson.food.common.RC_CAMERA
 import com.susieson.food.databinding.FragmentPictureBinding
+import com.susieson.food.repository.UploadTaskResult
+import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 import java.util.concurrent.Executor
@@ -23,9 +26,11 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+@AndroidEntryPoint
 class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
     private lateinit var binding: FragmentPictureBinding
+    private val viewModel: PictureViewModel by viewModels()
     private val Context.executor: Executor
         get() = ContextCompat.getMainExecutor(this)
 
@@ -35,6 +40,19 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_picture, container, false)
         showCamera()
+        viewModel.imageUrl.observe(viewLifecycleOwner) {
+            when (it) {
+                is UploadTaskResult.Success -> {
+                    Timber.d(it.uri.toString())
+                }
+                is UploadTaskResult.Progress -> {
+                    Timber.d(it.percentage.toString())
+                }
+                is UploadTaskResult.Error -> {
+                    Timber.e(it.exception)
+                }
+            }
+        }
         return binding.root
     }
 
@@ -97,7 +115,7 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         binding.cameraCapture.setOnClickListener {
             lifecycle.coroutineScope.launchWhenResumed {
                 val imageProxy = imageCapture.takePicture(requireContext().executor)
-                Timber.d("image captured: $imageProxy")
+                viewModel.uploadImage(imageProxy)
                 imageProxy.close()
             }
         }
@@ -134,6 +152,7 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                     continuation.resume(image)
                     super.onCaptureSuccess(image)
                 }
+
                 override fun onError(exception: ImageCaptureException) {
                     continuation.resumeWithException(exception)
                     super.onError(exception)
