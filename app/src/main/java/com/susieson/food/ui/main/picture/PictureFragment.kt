@@ -51,6 +51,7 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                             it.uri.toString()
                         )
                     )
+                    viewModel.uploadFinished()
                 }
                 is UploadTaskResult.Progress -> {
                     binding.progressIndicator.apply {
@@ -128,7 +129,7 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         val preview = buildPreview()
         val imageCapture = buildImageCapture()
         val cameraSelector = buildCameraSelector()
-        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+        cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageCapture)
         binding.cameraCapture.setOnClickListener {
             lifecycle.coroutineScope.launchWhenResumed {
                 val imageProxy = imageCapture.takePicture(requireContext().executor)

@@ -10,6 +10,10 @@ class PictureViewModel @ViewModelInject constructor(
 ) : ViewModel() {
     val imageUrl = imageRepository.imageUrl
 
+    fun uploadFinished() {
+        imageRepository.uploadFinished()
+    }
+
     fun uploadImage(imageProxy: ImageProxy) {
         val planeProxy = imageProxy.planes[0]
         val buffer = planeProxy.buffer

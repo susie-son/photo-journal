@@ -14,6 +14,10 @@ class ImageRepository @Inject constructor(storage: FirebaseStorage) {
     }
     var imageUrl = MutableLiveData<UploadTaskResult>()
 
+    fun uploadFinished() {
+        imageUrl.value = null
+    }
+
     fun uploadImage(bytes: ByteArray) {
         val imageReference = imagesReference?.child(UUID.randomUUID().toString())
         val uploadTask = imageReference?.putBytes(bytes)
