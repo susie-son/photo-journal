@@ -31,7 +31,8 @@ class EntryAdapter :
     class EntryDiffCallback : DiffUtil.ItemCallback<Entry>() {
         override fun areItemsTheSame(oldItem: Entry, newItem: Entry) = oldItem == newItem
         override fun areContentsTheSame(oldItem: Entry, newItem: Entry): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.description == newItem.description &&
+                    oldItem.imageUrl == newItem.imageUrl
         }
     }
 }

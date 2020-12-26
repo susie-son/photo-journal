@@ -43,7 +43,11 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         viewModel.imageUrl.observe(viewLifecycleOwner) {
             when (it) {
                 is UploadTaskResult.Success -> {
-                    Timber.d(it.uri.toString())
+                    findNavController().navigate(
+                        PictureFragmentDirections.actionPictureFragmentToAddFragment(
+                            it.uri.toString()
+                        )
+                    )
                 }
                 is UploadTaskResult.Progress -> {
                     Timber.d(it.percentage.toString())

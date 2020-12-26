@@ -3,8 +3,8 @@
     <string name="sign_in">Sign in</string>
     <string name="home">Home</string>
     <string name="add_entry">Add Entry</string>
-    <string name="name">Name</string>
-    <string name="name_input_error">Name is required</string>
     <string name="take_picture">Take Picture</string>
     <string name="camera_permission_rationale">Access to camera is needed to take photos.</string>
+    <string name="image_preview">Image preview</string>
+    <string name="description">Description</string>
 </resources>
