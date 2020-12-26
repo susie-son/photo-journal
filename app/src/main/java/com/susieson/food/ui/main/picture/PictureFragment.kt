@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.susieson.food.R
 import com.susieson.food.common.RC_CAMERA
 import com.susieson.food.databinding.FragmentPictureBinding
@@ -59,7 +60,13 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                 }
                 is UploadTaskResult.Error -> {
                     binding.progressIndicator.hide()
-                    Timber.e(it.exception)
+                    it.exception.message?.let { message ->
+                        Snackbar.make(
+                            binding.root,
+                            message,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
         }
