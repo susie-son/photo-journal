@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.susieson.food.ui.main.home.HomeFragment"
+        android:name="com.susieson.photo.ui.main.home.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.susieson.food.ui.main.add.AddFragment"
+        android:name="com.susieson.photo.ui.main.add.AddFragment"
         android:label="@string/add_entry"
         tools:layout="@layout/fragment_add">
         <argument
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/pictureFragment"
-        android:name="com.susieson.food.ui.main.picture.PictureFragment"
+        android:name="com.susieson.photo.ui.main.picture.PictureFragment"
         android:label="@string/take_picture"
         tools:layout="@layout/fragment_picture">
         <action

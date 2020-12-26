@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Food Journal</string>
+    <string name="app_name">Photo Journal</string>
     <string name="sign_in">Sign in</string>
     <string name="home">Home</string>
     <string name="add_entry">Add Entry</string>
