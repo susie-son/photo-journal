@@ -40,9 +40,11 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_picture, container, false)
         showCamera()
+        binding.progressIndicator.hide()
         viewModel.imageUrl.observe(viewLifecycleOwner) {
             when (it) {
                 is UploadTaskResult.Success -> {
+                    binding.progressIndicator.hide()
                     findNavController().navigate(
                         PictureFragmentDirections.actionPictureFragmentToAddFragment(
                             it.uri.toString()
@@ -50,9 +52,13 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                     )
                 }
                 is UploadTaskResult.Progress -> {
-                    Timber.d(it.percentage.toString())
+                    binding.progressIndicator.apply {
+                        show()
+                        setProgressCompat(it.percentage, true)
+                    }
                 }
                 is UploadTaskResult.Error -> {
+                    binding.progressIndicator.hide()
                     Timber.e(it.exception)
                 }
             }
