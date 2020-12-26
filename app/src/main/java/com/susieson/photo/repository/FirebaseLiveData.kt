@@ -23,7 +23,8 @@ class FirebaseUserLiveData : LiveData<FirebaseUser>() {
 
 class FirestoreCollectionLiveData<T>(
     private val reference: CollectionReference,
-    private val valueType: Class<T>
+    private val valueType: Class<T>,
+    private val order: Pair<String, Query.Direction>? = null
 ) : LiveData<List<T>>() {
     private var listener: ListenerRegistration? = null
     private val eventListener =
@@ -39,7 +40,8 @@ class FirestoreCollectionLiveData<T>(
 
     override fun onActive() {
         super.onActive()
-        listener = reference.addSnapshotListener(eventListener)
+        listener = (order?.let { reference.orderBy(it.first, it.second) }
+            ?: reference).addSnapshotListener(eventListener)
     }
 
     override fun onInactive() {
