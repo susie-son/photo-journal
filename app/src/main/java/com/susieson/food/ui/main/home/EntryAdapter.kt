@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.susieson.food.common.formatDate
 import com.susieson.food.databinding.ItemEntryBinding
 import com.susieson.food.model.Entry
 
@@ -23,16 +25,14 @@ class EntryAdapter :
 
     inner class ViewHolder(val binding: ItemEntryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entry: Entry) {
-            binding.entry = entry
-            binding.executePendingBindings()
+            binding.thumbnail.load(entry.imageUrl)
+            binding.description.text = entry.description
+            binding.timestamp.text = formatDate(entry.timestamp.toDate())
         }
     }
 
     class EntryDiffCallback : DiffUtil.ItemCallback<Entry>() {
         override fun areItemsTheSame(oldItem: Entry, newItem: Entry) = oldItem == newItem
-        override fun areContentsTheSame(oldItem: Entry, newItem: Entry): Boolean {
-            return oldItem.description == newItem.description &&
-                    oldItem.imageUrl == newItem.imageUrl
-        }
+        override fun areContentsTheSame(oldItem: Entry, newItem: Entry) = oldItem == newItem
     }
 }
