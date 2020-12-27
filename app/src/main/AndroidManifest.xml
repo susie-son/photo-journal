@@ -16,6 +16,8 @@
         android:theme="@style/Theme.PhotoJournal">
         <activity
             android:name=".ui.splash.SplashActivity"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

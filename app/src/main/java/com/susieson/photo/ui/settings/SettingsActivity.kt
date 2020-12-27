@@ -25,8 +25,9 @@ class SettingsActivity : AppCompatActivity() {
                 message = R.string.sign_out_message,
                 positiveListener = { _, _ ->
                     viewModel.signOut()
-                    startActivity(Intent(this, AuthenticationActivity::class.java))
-                    finish()
+                    startActivity(Intent(this, AuthenticationActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    })
                 })
         }
         binding.deleteAccount.setOnClickListener {
@@ -35,8 +36,9 @@ class SettingsActivity : AppCompatActivity() {
                 message = R.string.delete_account_message,
                 positiveListener = { _, _ ->
                     viewModel.deleteAccount()
-                    startActivity(Intent(this, AuthenticationActivity::class.java))
-                    finish()
+                    startActivity(Intent(this, AuthenticationActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    })
                 })
         }
     }
