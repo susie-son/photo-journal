@@ -49,6 +49,7 @@ class AuthenticationActivity : AppCompatActivity() {
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
+                .setTheme(R.style.PhotoJournalTheme)
                 .build(),
             RC_SIGN_IN
         )

@@ -12,4 +12,5 @@
     <string name="sign_out_message">This will sign you out of the app.</string>
     <string name="delete_account">Delete account</string>
     <string name="delete_account_message">This will permanently delete your account from the app.</string>
+    <string name="onboarding_text">Track your life with the power of photos.</string>
 </resources>
