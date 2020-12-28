@@ -27,6 +27,7 @@ class AddFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add, container, false)
         viewModel.imageUrl = args.downloadUrl ?: ""
+        viewModel.imageId = args.imageId ?: ""
         binding.imagePreview.load(viewModel.imageUrl)
         binding.descriptionInput.addTextChangedListener {
             it?.let { viewModel.setDescription(it.toString()) }
@@ -36,5 +37,10 @@ class AddFragment : Fragment() {
             findNavController().popBackStack(R.id.homeFragment, false)
         }
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.deleteImage()
     }
 }

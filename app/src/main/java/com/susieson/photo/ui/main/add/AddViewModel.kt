@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.susieson.photo.model.Entry
 import com.susieson.photo.repository.EntryRepository
+import com.susieson.photo.repository.ImageRepository
 
 class AddViewModel @ViewModelInject constructor(
-    private val entryRepository: EntryRepository
+    private val entryRepository: EntryRepository,
+    private val imageRepository: ImageRepository
 ) : ViewModel() {
     lateinit var imageUrl: String
+    lateinit var imageId: String
     private val description = MutableLiveData<String>()
 
     fun setDescription(description: String) {
@@ -23,5 +26,9 @@ class AddViewModel @ViewModelInject constructor(
                 imageUrl = imageUrl
             )
         )
+    }
+
+    fun deleteImage() {
+        imageRepository.deleteImage(imageId)
     }
 }

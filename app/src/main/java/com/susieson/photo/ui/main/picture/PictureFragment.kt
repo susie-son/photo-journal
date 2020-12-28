@@ -48,7 +48,8 @@ class PictureFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                     binding.progressIndicator.hide()
                     findNavController().navigate(
                         PictureFragmentDirections.actionPictureFragmentToAddFragment(
-                            it.uri.toString()
+                            downloadUrl = it.uri,
+                            imageId = it.id
                         )
                     )
                     viewModel.uploadFinished()

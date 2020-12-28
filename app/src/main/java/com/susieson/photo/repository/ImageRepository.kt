@@ -1,6 +1,5 @@
 package com.susieson.photo.repository
 
-import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
@@ -19,12 +18,13 @@ class ImageRepository @Inject constructor(storage: FirebaseStorage) {
     }
 
     fun uploadImage(bytes: ByteArray) {
-        val imageReference = imagesReference?.child(UUID.randomUUID().toString())
+        val id = UUID.randomUUID().toString()
+        val imageReference = imagesReference?.child(id)
         val uploadTask = imageReference?.putBytes(bytes)
         uploadTask?.addOnSuccessListener {
             val urlTask = imageReference.downloadUrl
             urlTask.addOnSuccessListener {
-                imageUrl.value = UploadTaskResult.Success(it)
+                imageUrl.value = UploadTaskResult.Success(it.toString(), id)
             }
             urlTask.addOnFailureListener {
                 imageUrl.value = UploadTaskResult.Error(it)
@@ -38,10 +38,15 @@ class ImageRepository @Inject constructor(storage: FirebaseStorage) {
             imageUrl.value = UploadTaskResult.Error(it)
         }
     }
+
+    fun deleteImage(file: String) {
+        val imageReference = imagesReference?.child(file)
+        imageReference?.delete()
+    }
 }
 
 sealed class UploadTaskResult {
-    data class Success(val uri: Uri) : UploadTaskResult()
+    data class Success(val uri: String, val id: String) : UploadTaskResult()
     data class Progress(val percentage: Int) : UploadTaskResult()
     data class Error(val exception: Exception) : UploadTaskResult()
 }
