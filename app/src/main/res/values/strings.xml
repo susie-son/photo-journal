@@ -13,4 +13,5 @@
     <string name="delete_account">Delete account</string>
     <string name="delete_account_message">This will permanently delete your account from the app.</string>
     <string name="onboarding_text">Track your life with the power of photos.</string>
+    <string name="entries_empty">Add an entry to get started!</string>
 </resources>

@@ -31,6 +31,13 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
         viewModel.entries?.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.recyclerView.visibility = View.GONE
+                binding.recyclerViewEmpty.visibility = View.VISIBLE
+            } else {
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.recyclerViewEmpty.visibility = View.GONE
+            }
             entryAdapter.submitList(it)
         }
         binding.floatingActionButton.setOnClickListener {
