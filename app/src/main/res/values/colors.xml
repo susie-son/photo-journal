@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_grey_600">#546e7a</color>
-    <color name="blue_grey_600_light">#819ca9</color>
-    <color name="blue_grey_600_dark">#29434e</color>
+    <color name="blue_grey_600">#546E7A</color>
+    <color name="blue_grey_600_light">#819CA9</color>
+    <color name="blue_grey_600_dark">#29434E</color>
     <color name="orange_500">#FF9800</color>
     <color name="orange_500_light">#FFC947</color>
     <color name="orange_500_dark">#C66900</color>
