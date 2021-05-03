@@ -1,11 +1,13 @@
 package com.susieson.photo.ui.main.picture
 
 import androidx.camera.core.ImageProxy
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.susieson.photo.repository.ImageRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PictureViewModel @ViewModelInject constructor(
+@HiltViewModel
+class PictureViewModel @Inject constructor(
     private val imageRepository: ImageRepository
 ) : ViewModel() {
     val imageUrl = imageRepository.imageUrl

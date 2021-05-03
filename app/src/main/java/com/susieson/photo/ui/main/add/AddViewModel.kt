@@ -1,13 +1,15 @@
 package com.susieson.photo.ui.main.add
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.susieson.photo.model.Entry
 import com.susieson.photo.repository.EntryRepository
 import com.susieson.photo.repository.ImageRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AddViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AddViewModel @Inject constructor(
     private val entryRepository: EntryRepository,
     private val imageRepository: ImageRepository
 ) : ViewModel() {

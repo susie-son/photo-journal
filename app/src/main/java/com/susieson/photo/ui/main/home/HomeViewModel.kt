@@ -1,11 +1,13 @@
 package com.susieson.photo.ui.main.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.susieson.photo.repository.AuthenticationRepository
 import com.susieson.photo.repository.EntryRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     authenticationRepository: AuthenticationRepository,
     entryRepository: EntryRepository
 ) : ViewModel() {
